@@ -1,0 +1,5 @@
+Windmill (http://getwindmill.com) Ruby driver.
+
+This driver allows for easy integration into for example Cucumber features
+of Windmill. This driver depends on JsonRPC, available at 
+http://github.com/dbussink/jsonrpc
