@@ -46,11 +46,13 @@ module Windmill
     end
 
     def execute_command(action_object = {})
+      action_object[:params] ||= {}
       result = @jsonrpc.request("execute_command", :action_object => action_object)
       result["result"]
     end
 
     def execute_test(action_object = {})
+      action_object[:params] ||= {}
       result = @jsonrpc.request("execute_test", :action_object => action_object)
       result["result"]
     end
