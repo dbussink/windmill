@@ -62,8 +62,9 @@ describe Windmill::Client do
     @windmill = Windmill::Client.new("http://localhost:4444/api")
   end
 
-  #it { @windmill.should respond_to(:start_suite) }
-  #it { @windmill.should respond_to(:stop_suite) }
+  # Not supported atm
+  it { @windmill.should respond_to(:start_suite) }
+  it { @windmill.should respond_to(:stop_suite) }
   #it { @windmill.should respond_to(:add_object) }
   #it { @windmill.should respond_to(:add_json_test) }
   #it { @windmill.should respond_to(:add_test) }
@@ -72,6 +73,7 @@ describe Windmill::Client do
   #it { @windmill.should respond_to(:execute_object) }
   #it { @windmill.should respond_to(:execute_json_command) }
   #it { @windmill.should respond_to(:execute_json_test) }
+
   it { @windmill.should respond_to(:execute_command) }
   it { @windmill.should respond_to(:execute_test) }
 
@@ -97,6 +99,41 @@ describe Windmill::Client do
       @result.should == {"status" => true, "version" => "0.1", "suite_name" => "__main__", "result" => ["click","waits.forJS","asserts.assertText"], 
                                           "params" => {"uuid" => "123"},
                                           "method" => "commands.getControllerMethods"}
+    end
+
+  end
+
+  describe 'start_suite' do
+
+    before do
+      Net::HTTP.raw_response_data = '{"result": {"status": true, "version": "0.1", "suite_name": "__main__", 
+                                        "result": ["click","waits.forJS","asserts.assertText"], 
+                                          "params": {"uuid":"123"},
+                                          "method": "commands.getControllerMethods"}, "id": "1"}'
+      @windmill = Windmill::Client.new("http://localhost:4444/api")
+      @result = @windmill.start_suite('test_suite')
+    end
+
+    it 'should correctly run the command' do
+      JSON.parse(Net::HTTP.raw_post_body).should == JSON.parse('{"method":"start_suite","params":{"suite_name":"test_suite"}}')
+    end
+
+  end
+
+
+  describe 'stop_suite' do
+
+    before do
+      Net::HTTP.raw_response_data = '{"result": {"status": true, "version": "0.1", "suite_name": "__main__", 
+                                        "result": ["click","waits.forJS","asserts.assertText"], 
+                                          "params": {"uuid":"123"},
+                                          "method": "commands.getControllerMethods"}, "id": "1"}'
+      @windmill = Windmill::Client.new("http://localhost:4444/api")
+      @result = @windmill.stop_suite
+    end
+
+    it 'should correctly run the command' do
+      JSON.parse(Net::HTTP.raw_post_body).should == JSON.parse('{"method":"stop_suite","params":{}}')
     end
 
   end

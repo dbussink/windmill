@@ -63,6 +63,16 @@ module Windmill
       self
     end
 
+    def start_suite(suite_name)
+      result = @jsonrpc.request("start_suite", :suite_name => suite_name)
+      result["result"]
+    end
+
+    def stop_suite
+      result = @jsonrpc.request("stop_suite", {})
+      result["result"]
+    end
+
   end
 
 end
