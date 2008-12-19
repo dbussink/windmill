@@ -15,6 +15,9 @@ module Windmill
       result = execute_command(:method => "commands.getControllerMethods")
       if result["status"]
         result["result"].each do |method|
+          if loc = method.index('.')
+            method = method[(loc + 1) .. method.size]
+          end
           if method =~ /command/
             self.class.class_eval <<-RUBY, __FILE__, __LINE__ + 1
               def #{method}(*args)
@@ -50,6 +53,14 @@ module Windmill
     def execute_test(action_object = {})
       result = @jsonrpc.request("execute_test", :action_object => action_object)
       result["result"]
+    end
+
+    def waits
+      self
+    end
+
+    def asserts
+      self
     end
 
   end

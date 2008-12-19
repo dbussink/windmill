@@ -56,7 +56,7 @@ describe Windmill::Client do
 
   before do
     Net::HTTP.raw_response_data = '{"result": {"status": true, "version": "0.1", "suite_name": "__main__", 
-                                      "result": ["click"], 
+                                      "result": ["click","waits.forJS","asserts.assertText"], 
                                         "params": {"uuid":"123"},
                                         "method": "commands.getControllerMethods"}, "id": "1"}'
     @windmill = Windmill::Client.new("http://localhost:4444/api")
@@ -76,13 +76,17 @@ describe Windmill::Client do
   it { @windmill.should respond_to(:execute_test) }
 
   # It should also respond to methods defined in the API
+  it { @windmill.should respond_to(:waits) }
+  it { @windmill.should respond_to(:asserts) }
   it { @windmill.should respond_to(:click) }
+  it { @windmill.waits.should respond_to(:forJS) }
+  it { @windmill.asserts.should respond_to(:assertText) }
 
   describe 'execute_command' do
 
     before do
       Net::HTTP.raw_response_data = '{"result": {"status": true, "version": "0.1", "suite_name": "__main__", 
-                                        "result": ["click"], 
+                                        "result": ["click","waits.forJS","asserts.assertText"], 
                                           "params": {"uuid":"123"},
                                           "method": "commands.getControllerMethods"}, "id": "1"}'
       @windmill = Windmill::Client.new("http://localhost:4444/api")
@@ -90,7 +94,7 @@ describe Windmill::Client do
     end
 
     it 'should correctly run the command' do
-      @result.should == {"status" => true, "version" => "0.1", "suite_name" => "__main__", "result" => ["click"], 
+      @result.should == {"status" => true, "version" => "0.1", "suite_name" => "__main__", "result" => ["click","waits.forJS","asserts.assertText"], 
                                           "params" => {"uuid" => "123"},
                                           "method" => "commands.getControllerMethods"}
     end
