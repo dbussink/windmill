@@ -55,8 +55,8 @@ end
 describe Windmill::Client do
 
   before do
-    Net::HTTP.raw_response_data = '{"result": {"status": true, "version": "0.1", "suite_name": "__main__", 
-                                      "result": ["click","waits.forJS","asserts.assertText"], 
+    Net::HTTP.raw_response_data = '{"result": {"status": true, "version": "0.1", "suite_name": "__main__",
+                                      "result": ["click","waits.forJS","asserts.assertText"],
                                         "params": {"uuid":"123"},
                                         "method": "commands.getControllerMethods"}, "id": "1"}'
     @windmill = Windmill::Client.new("http://localhost:4444/api")
@@ -87,8 +87,8 @@ describe Windmill::Client do
   describe 'execute_command' do
 
     before do
-      Net::HTTP.raw_response_data = '{"result": {"status": true, "version": "0.1", "suite_name": "__main__", 
-                                        "result": ["click","waits.forJS","asserts.assertText"], 
+      Net::HTTP.raw_response_data = '{"result": {"status": true, "version": "0.1", "suite_name": "__main__",
+                                        "result": ["click","waits.forJS","asserts.assertText"],
                                           "params": {"uuid":"123"},
                                           "method": "commands.getControllerMethods"}, "id": "1"}'
       @windmill = Windmill::Client.new("http://localhost:4444/api")
@@ -96,7 +96,7 @@ describe Windmill::Client do
     end
 
     it 'should correctly run the command' do
-      @result.should == {"status" => true, "version" => "0.1", "suite_name" => "__main__", "result" => ["click","waits.forJS","asserts.assertText"], 
+      @result.should == {"status" => true, "version" => "0.1", "suite_name" => "__main__", "result" => ["click","waits.forJS","asserts.assertText"],
                                           "params" => {"uuid" => "123"},
                                           "method" => "commands.getControllerMethods"}
     end
@@ -106,8 +106,8 @@ describe Windmill::Client do
   describe 'start_suite' do
 
     before do
-      Net::HTTP.raw_response_data = '{"result": {"status": true, "version": "0.1", "suite_name": "__main__", 
-                                        "result": ["click","waits.forJS","asserts.assertText"], 
+      Net::HTTP.raw_response_data = '{"result": {"status": true, "version": "0.1", "suite_name": "__main__",
+                                        "result": ["click","waits.forJS","asserts.assertText"],
                                           "params": {"uuid":"123"},
                                           "method": "commands.getControllerMethods"}, "id": "1"}'
       @windmill = Windmill::Client.new("http://localhost:4444/api")
@@ -124,8 +124,8 @@ describe Windmill::Client do
   describe 'stop_suite' do
 
     before do
-      Net::HTTP.raw_response_data = '{"result": {"status": true, "version": "0.1", "suite_name": "__main__", 
-                                        "result": ["click","waits.forJS","asserts.assertText"], 
+      Net::HTTP.raw_response_data = '{"result": {"status": true, "version": "0.1", "suite_name": "__main__",
+                                        "result": ["click","waits.forJS","asserts.assertText"],
                                           "params": {"uuid":"123"},
                                           "method": "commands.getControllerMethods"}, "id": "1"}'
       @windmill = Windmill::Client.new("http://localhost:4444/api")
@@ -139,12 +139,12 @@ describe Windmill::Client do
   end
 
   describe 'executing a generated method' do
-    
+
     before do
-      Net::HTTP.raw_response_data = '{"result": {"version": "0.1", "suite_name": "__main__", "result": true, 
-                                                 "starttime": "2008-11-19T14:29:48.658Z", 
-                                                 "params": {"link": "People", "uuid": "1b38d526-cdd1-11dd-87e4-001ec20a547b"}, 
-                                                 "endtime": "2008-11-19T14:29:48.661Z", "method": "click"}, 
+      Net::HTTP.raw_response_data = '{"result": {"version": "0.1", "suite_name": "__main__", "result": true,
+                                                 "starttime": "2008-11-19T14:29:48.658Z",
+                                                 "params": {"link": "People", "uuid": "1b38d526-cdd1-11dd-87e4-001ec20a547b"},
+                                                 "endtime": "2008-11-19T14:29:48.661Z", "method": "click"},
                                       "id": "1"}'
       @windmill = Windmill::Client.new("http://localhost:4444/api")
       @result = @windmill.click(:link => "People")
@@ -154,7 +154,6 @@ describe Windmill::Client do
       JSON.parse(Net::HTTP.raw_post_body).should == JSON.parse('{"method":"execute_test","params":{"action_object":{"method":"click","params":{"link":"People"}}}}')
     end
 
-    
   end
 
 end
