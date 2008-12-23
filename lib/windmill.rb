@@ -14,7 +14,8 @@ module Windmill
       
       result = execute_command(:method => "commands.getControllerMethods")
       if result["status"]
-        result["result"].each do |method|
+        result["result"].each do |full_method|
+          method = full_method
           if loc = method.index('.')
             method = method[(loc + 1) .. method.size]
           end
@@ -26,7 +27,7 @@ module Windmill
                 elsif args.size == 1
                   args = args.first
                 end
-                execute_command(:method => "#{method}", :params => args)
+                execute_command(:method => "#{full_method}", :params => args)
               end
             RUBY
           else
@@ -37,7 +38,7 @@ module Windmill
                 elsif args.size == 1
                   args = args.first
                 end
-                execute_test(:method => "#{method}", :params => args)
+                execute_test(:method => "#{full_method}", :params => args)
               end
             RUBY
           end
