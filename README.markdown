@@ -8,13 +8,13 @@ This Ruby gem provides a automatically generated wrapper layer around the Windmi
 
 Install Windmill according to the instruction available on the website. For interfacing to it from Ruby you need to install the windmill gem.
 
-$ sudo gem install windmill
+    $ sudo gem install windmill
 
 ## Running
 
 To get up and running quickly, the first step is to start a Windmill session, for example one for Google.
 
-$ windmill run_service firefox http://google.com
+    $ windmill run_service firefox http://google.com
 
 This starts a Firefox instance with a Windmill IDE that goes to Google. From there it's possible to add steps manually to experiment with it. These steps can also be run from Ruby.
 
